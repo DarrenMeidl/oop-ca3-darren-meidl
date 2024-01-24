@@ -16,6 +16,13 @@ public class CA3_Question1
     {
         Stack<Integer> driveway = new Stack<>();
         Stack<Integer> street = new Stack<>();
+
+        for (int operation : operations) {
+            if (operation == 0){
+                System.out.println("Ending Simulation...");
+                break;
+            }
+        }
     }
 
 
