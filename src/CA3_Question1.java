@@ -1,5 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Stack;
 
 /**
  *  Name: Darren Meidl
@@ -8,11 +9,13 @@ import java.util.Deque;
 public class CA3_Question1
 {
     public static void main(String[] args) {
-        runSimulation();
+        int[] operations = {1, 2, 3, 4, 7, -2, -1, 6, 0};
+        runSimulation(operations);
     }
-    public static void runSimulation()
+    public static void runSimulation(int[] operations)
     {
-
+        Stack<Integer> driveway = new Stack<>();
+        Stack<Integer> street = new Stack<>();
     }
 
 
