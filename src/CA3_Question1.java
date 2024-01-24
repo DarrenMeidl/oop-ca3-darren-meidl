@@ -1,5 +1,3 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Stack;
 
 /**
@@ -14,7 +12,7 @@ public class CA3_Question1
     }
     public static void runSimulation(int[] operations)
     {
-        // drivewat and street integer stacks
+        // driveway and street integer stacks
         Stack<Integer> driveway = new Stack<>();
         Stack<Integer> street = new Stack<>();
         // for loop where all operations are executed
