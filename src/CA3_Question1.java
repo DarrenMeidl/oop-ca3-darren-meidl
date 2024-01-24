@@ -14,13 +14,18 @@ public class CA3_Question1
     }
     public static void runSimulation(int[] operations)
     {
+        // drivewat and street integer stacks
         Stack<Integer> driveway = new Stack<>();
         Stack<Integer> street = new Stack<>();
-
+        // for loop where all operations are executed
         for (int operation : operations) {
-            if (operation == 0){
+            if (operation == 0){ // if the current operation is 0, end the simulation
                 System.out.println("Ending Simulation...");
                 break;
+            }
+            else if (operation > 0) { // if the current operation is a positive number, add to driveway
+                driveway.push(operation);
+                System.out.println("Car " + operation + " has entered the driveway.");
             }
         }
     }
