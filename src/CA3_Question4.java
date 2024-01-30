@@ -21,11 +21,16 @@ public class CA3_Question4 {
             String[] tags = line.split(" "); // splits line into tags
 
             for (String tag : tags){ // Runs through every individual tag
-                if(tag.substring(0) == "</"){
+                if(tag.startsWith("</")){ // If it's a closing tag
+                    String openingTag = "<" + tag.substring(2); // Creates a new opening tag
 
+                    if (tagStack.isEmpty() || !tagStack.peek().equals(openingTag)){ // if the stack is empty or the last tag isn't the same as the opening tag, then the tags are wrongly nested
+                        return false;
+                    }
+                    tagStack.pop(); // remove the opening tag from the stack
                 }
-                else{
-                    tagStack.push(tag); // Adds opening tag to stack
+                else{ // If it's an opening tag
+                    tagStack.push(tag); // Adds tag to stack
                 }
             }
         }
@@ -45,6 +50,7 @@ public class CA3_Question4 {
         String[] files = {"tags_valid.txt", "tags_invalid.txt"};
         for(String fName: files) {
             System.out.print(fName +": ");
+            validate(fName);
             if (validate(fName)) {
                 System.out.println("This file is valid");
             } else {
