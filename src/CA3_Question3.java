@@ -27,9 +27,19 @@ public class CA3_Question3
                 identifiers.get(identifier).add("Line " + lineNumber + ": " + line); // adds a new string containing the line number and line itself to the arraylist of the identifier
             }
 
-            lineNumber++;
-            lineScanner.close();
+            lineNumber++; // increments line number count
+            lineScanner.close(); // closes lineScanner to free resources
         }
+
+        for (Map.Entry<String, List<String>> entry : identifiers.entrySet()) { // For every entry in the map, print them
+            System.out.println("Identifier: " + entry.getKey()); // prints the key of current entry
+            for (String line : entry.getValue()) { // Puts the value of the current entry in a string & prints it
+                System.out.println(line);
+            }
+            System.out.println(); // creates a space
+        }
+
+        scanner.close(); // stops original scanner to free resources
     }
 
     public static void main(String[] args) throws FileNotFoundException {
