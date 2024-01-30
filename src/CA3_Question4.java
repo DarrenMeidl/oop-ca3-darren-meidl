@@ -50,7 +50,6 @@ public class CA3_Question4 {
         String[] files = {"tags_valid.txt", "tags_invalid.txt"};
         for(String fName: files) {
             System.out.print(fName +": ");
-            validate(fName);
             if (validate(fName)) {
                 System.out.println("This file is valid");
             } else {
