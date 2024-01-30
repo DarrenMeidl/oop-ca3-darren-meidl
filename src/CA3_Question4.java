@@ -13,7 +13,24 @@ public class CA3_Question4 {
      */
     public static boolean validate(String filename) throws FileNotFoundException
     {
-        return false;
+        Stack<String> tagStack = new Stack<>(); // stack
+        Scanner scanner = new Scanner(new File(filename)); // scanning file
+
+        while(scanner.hasNextLine()){ // run through each line
+            String line = scanner.nextLine(); // gets next line
+            String[] tags = line.split(" "); // splits line into tags
+
+            for (String tag : tags){ // Runs through every individual tag
+                if(tag.substring(0) == "</"){
+
+                }
+                else{
+                    tagStack.push(tag); // Adds opening tag to stack
+                }
+            }
+        }
+        // if any of the tags aren't closed then the html code is incomplete and needs to be fixed, so function ends
+        return tagStack.isEmpty();
     }
 
     /*
