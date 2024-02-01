@@ -13,7 +13,29 @@ public class CA3_Question4 {
      */
     public static boolean validate(String filename) throws FileNotFoundException
     {
-        return false;
+        Stack<String> tagStack = new Stack<>(); // stack
+        Scanner scanner = new Scanner(new File(filename)); // scanning file
+
+        while(scanner.hasNextLine()){ // run through each line
+            String line = scanner.nextLine(); // gets next line
+            String[] tags = line.split(" "); // splits line into tags
+
+            for (String tag : tags){ // Runs through every individual tag
+                if(tag.startsWith("</")){ // If it's a closing tag
+                    String openingTag = "<" + tag.substring(2); // Creates a new opening tag
+
+                    if (tagStack.isEmpty() || !tagStack.peek().equals(openingTag)){ // if the stack is empty or the last tag isn't the same as the opening tag, then the tags are wrongly nested
+                        return false;
+                    }
+                    tagStack.pop(); // remove the opening tag from the stack
+                }
+                else{ // If it's an opening tag
+                    tagStack.push(tag); // Adds tag to stack
+                }
+            }
+        }
+        // if any of the tags aren't closed then the html code is incomplete and needs to be fixed, so function ends
+        return tagStack.isEmpty();
     }
 
     /*
