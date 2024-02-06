@@ -20,16 +20,16 @@ public class CA3_Question10
 
         // Read the file and build the citiesMap
         while (scanner.hasNextLine()) {
-            String[] line = scanner.nextLine().split(" ");
-            String city1 = line[0];
-            String city2 = line[1];
-            int distance = Integer.parseInt(line[2]);
+            String[] line = scanner.nextLine().split(" "); // Reads next line & stores split parts into a String array using space delimiter
+            String city1 = line[0]; // First part
+            String city2 = line[1]; // Second part
+            int distance = Integer.parseInt(line[2]); // Converts third part to integer
 
-            citiesMap.putIfAbsent(city1, new TreeSet<>());
-            citiesMap.putIfAbsent(city2, new TreeSet<>());
+            citiesMap.putIfAbsent(city1, new TreeSet<>()); // If city1 (as a key) isn't in map already, add it
+            citiesMap.putIfAbsent(city2, new TreeSet<>()); // If city2 (as a key) isn't in map already, add it
 
-            citiesMap.get(city1).add(new DistanceTo(city2, distance));
-            citiesMap.get(city2).add(new DistanceTo(city1, distance));
+            citiesMap.get(city1).add(new DistanceTo(city2, distance)); // Gets city1's treeset & adds 'DistanceTo' object to it (stores the distance between city1 & 2)
+            citiesMap.get(city2).add(new DistanceTo(city1, distance)); // Gets city2's treeset & adds 'DistanceTo' object to it (stores the distance between city2 & 1)
         }
 
         String from = citiesMap.keySet().iterator().next(); // Let 'from' be the starting point.
