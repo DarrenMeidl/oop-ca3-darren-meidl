@@ -25,12 +25,15 @@ public class CA3_Question10
             String from = in.next(); // Let 'from' be the starting point.
             queue.add(new DistanceTo(from, 0)); // Add DistanceTo(from, 0) to a priority queue.
             Map<String, Integer> shortestKnownDistance = new HashMap<>(); // Construct a map 'shortestKnownDistance' (from city names to distances)
+
             while(!queue.isEmpty()){ // While the queue isn't empty
                 DistanceTo smallest = queue.poll(); // Get smallest element
                 from = smallest.getTarget(); // Update 'from' to be target of smallest distance
-                if (!shortestKnownDistance.containsKey(from)){ // If the target city is not a key in 'shortestKnownDistance'
-                    int d = smallest.getDistance(); // Let d be the distance to that target.
+                int d = smallest.getDistance(); // Let d be the distance to that target.
+
+                if (!shortestKnownDistance.containsKey(from) || d < shortestKnownDistance.get(from)){ // If the target city is not a key in 'shortestKnownDistance' or the new distance is smaller
                     shortestKnownDistance.put(from, d); // Put (target, d) into shortestKnownDistance.
+
                     if(citiesMap.containsKey(from)) {
                         for (DistanceTo dt : citiesMap.get(from)) { // For all cities 'c' that have a direct connection from target
                             String c = dt.getTarget(); // Get the city name from the DistanceTo object
