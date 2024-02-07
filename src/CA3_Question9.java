@@ -39,6 +39,8 @@ public class CA3_Question9
             arr[0][i] = -1; // -1 represents a wall
         }
 
+        arr[4][4] = 1; // 1 means start point
+        arr[9][5] = 2; // 2 means exit point
 
         return arr;
     }
