@@ -1,4 +1,5 @@
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Name: Darren Meidl
@@ -67,6 +68,29 @@ public class CA3_Question9
 
         return arr;
     }
+
+
+
+
+
+
+
+    public void solve(int x, int y, DIRECTION dir)
+    {
+        // DEFINING DIRECTIONS
+        Map<DIRECTION, int[]> directionMap = new HashMap<>(); // new hashmap, direction enum as key & integer array as value
+        directionMap.put(DIRECTION.NORTH, new int[]{-1, 0});
+        directionMap.put(DIRECTION.EAST, new int[]{0, 1});
+        directionMap.put(DIRECTION.SOUTH, new int[]{1, 0});
+        directionMap.put(DIRECTION.WEST, new int[]{0, -1});
+    }
+
+
+
+
+
+
+
     public static void display(int[][] image)
     {
         for (int x = 0; x < image.length; x++)
@@ -78,11 +102,6 @@ public class CA3_Question9
             System.out.println();
         }
     }
-    public void solve(int x, int y, DIRECTION dir)
-    {
-
-    }
-
     public static void start()
     {
         int[][] arr = createMaze();
