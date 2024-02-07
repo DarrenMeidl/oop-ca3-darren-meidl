@@ -12,7 +12,7 @@ enum DIRECTION {NORTH, SOUTH,EAST,WEST};
 
 public class CA3_Question9
 {
-    public static int[][]  floodFillStart() {
+    public static int[][]  createMaze() {
         int[][] arr = new int[10][10]; // 10 x 10 grid of integers
         // Set entire grid to 0s, acts as 'blank canvas'
         for (int x = 0; x < 10; x++){ // For each x value
@@ -85,7 +85,7 @@ public class CA3_Question9
 
     public static void start()
     {
-        int[][] arr = floodFillStart();
+        int[][] arr = createMaze();
         display(arr);
     }
 
