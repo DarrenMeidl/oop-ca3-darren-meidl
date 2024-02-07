@@ -21,7 +21,7 @@ public class CA3_Question9
             }
         }
 
-        // Set outer walls in the maze
+    // OUTER WALLS
         // LEFT WALL
         for (int i = 0; i < 10; i++) {
             arr[i][0] = -1; // -1 represents a wall
@@ -39,8 +39,31 @@ public class CA3_Question9
             arr[0][i] = -1; // -1 represents a wall
         }
 
+    // INNER WALLS
+        // WALL 1
+        arr[5][3] = -1;
+        arr[5][4] = -1;
+        arr[5][5] = -1;
+        arr[5][6] = -1;
+        arr[5][7] = -1;
+        // WALL 2
+        arr[2][7] = -1;
+        arr[3][7] = -1;
+        arr[4][7] = -1;
+        // WALL 3
+        arr[1][5] = -1;
+        arr[2][5] = -1;
+        arr[3][5] = -1;
+        // WALL 4
+        arr[3][4] = -1;
+        arr[3][3] = -1;
+        arr[3][2] = -1;
+
+        // START & EXIT POINTS
         arr[4][4] = 1; // 1 means start point
         arr[9][5] = 2; // 2 means exit point
+
+
 
         return arr;
     }
