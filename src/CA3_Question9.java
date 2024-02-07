@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  *  Name: Darren Meidl
@@ -75,7 +76,7 @@ public class CA3_Question9
 
 
 
-    public void solve(int x, int y, DIRECTION dir)
+    public static void solve(int x, int y, DIRECTION dir, int[][] arr)
     {
         // DEFINING DIRECTIONS
         Map<DIRECTION, int[]> directionMap = new HashMap<>(); // new hashmap, direction enum as key & integer array as value
@@ -83,6 +84,52 @@ public class CA3_Question9
         directionMap.put(DIRECTION.EAST, new int[]{0, 1});
         directionMap.put(DIRECTION.SOUTH, new int[]{1, 0});
         directionMap.put(DIRECTION.WEST, new int[]{0, -1});
+
+        // CREATING STACK
+        Stack<int[]> directionsStack = new Stack<>();
+        directionsStack.push(new int[]{x, y}); // Add starting point (in method parameter) to stack
+
+        // ALGORITHM
+        while (!directionsStack.isEmpty()) {
+            int[] position = directionsStack.pop(); // Remove top position from stack
+            x = position[0]; // extracts x position
+            y = position[1]; // extracts y position
+
+            // Check if the current position is the exit
+            if (arr[x][y] == 2) {
+                System.out.println("Exit found at (" + x + ", " + y + ")");
+                return;
+            }
+
+            // Mark the current position as visited
+            arr[x][y] = -1;
+
+            // Check the specified direction first
+            int[] direction = directionMap.get(dir); // gets int array value from hashmap & assigns to new direction integer array
+            int newX = x + direction[0]; // adds x direction to current x
+            int newY = y + direction[1]; // adds y direction to current y
+
+            // Check if the new position is within the maze & not visited
+            if (newX >= 0 && newX < arr.length && newY >= 0 && newY < arr[0].length && arr[newX][newY] != -1) {
+                directionsStack.push(new int[]{newX, newY});
+                continue; // Ensures the while loop continues to the next position in the stack without checking other directions
+            }
+
+            // If the specified direction is blocked, check all other directions
+            for (DIRECTION d : DIRECTION.values()) {
+                if (d == dir) continue; // Skip the specified direction
+                direction = directionMap.get(d);
+                newX = x + direction[0];
+                newY = y + direction[1];
+
+                // Check if the new position is within the maze and not visited
+                if (newX >= 0 && newX < arr.length && newY >= 0 && newY < arr[0].length && arr[newX][newY] != -1) {
+                    directionsStack.push(new int[]{newX, newY});
+                }
+            }
+        }
+
+        System.out.println("No exit found.");
     }
 
 
@@ -106,6 +153,7 @@ public class CA3_Question9
     {
         int[][] arr = createMaze();
         display(arr);
+        solve(1, 1, DIRECTION.valueOf("SOUTH"), arr);
     }
 
     public static void main(String[] args) {
