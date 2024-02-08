@@ -24,16 +24,23 @@ public class CA3_Question6
             command = in.next();
             if(command.equalsIgnoreCase("buy"))
             {
+                System.out.print("Enter quantity: ");
                 int qty = in.nextInt();
+                System.out.print("\nEnter Price: ");
                 double price = in.nextDouble();
 
             }
             else if(command.equals("sell"))
             {
+                System.out.print("Enter quantity: ");
                 int qty = in.nextInt();
+                System.out.print("\nEnter Price: ");
                 double price = in.nextDouble();
-
-
+            }
+            else if(command.equals("quit"))
+            {
+                System.out.println("Ending program..");
+                return;
             }
         }while(!command.equalsIgnoreCase("quit"));
     }
