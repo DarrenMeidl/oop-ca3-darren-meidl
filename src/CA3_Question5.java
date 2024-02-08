@@ -15,7 +15,7 @@ public class CA3_Question5
     public void takeoff(String plane){
         takeoffQueue.add(plane); // Adds plane to takeoff queue
     }
-    public void land(PriorityQueue<String> land, String plane){
+    public void land(String plane){
         landQueue.add(plane); // Adds plane to landing queue
     }
 
@@ -45,6 +45,17 @@ public class CA3_Question5
 
     public static void main(String[] args)
     {
-
+        CA3_Question5 airport = new CA3_Question5(); // Create instance of the class
+        airport.takeoff("Flight-100");
+        airport.takeoff("Flight-220");
+        airport.land("Flight-320");
+        airport.takeoff("Flight-107");
+        airport.land("Flight-487");
+        airport.next();  // Landing Flight-320
+        airport.next();  // Landing Flight-487
+        airport.next();  // Takeoff Flight-100
+        airport.next();  // Takeoff Flight-220
+        airport.next();  // Takeoff Flight-107
+        airport.quit();  // Simulation ending..
     }
 }
