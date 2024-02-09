@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 /**
@@ -38,10 +37,13 @@ public class CA3_Question6
                 System.out.print("\nEnter Price: ");
                 double price = in.nextDouble();
                 int totalQuantity = 0;
+
                 // If there's no shares in the array, then we can't sell anything
                 if (arr.isEmpty()){
                     System.out.println("Error. No shares to sell.");
                 }
+
+
                 // Otherwise, if there is at least 1 or more shares
                 else {
                     // Calculate the total quantity of all shares we own
