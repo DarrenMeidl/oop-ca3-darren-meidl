@@ -15,7 +15,7 @@ public class CA3_Question6
     quit
      */
     public static void main(String[] args) {
-        Deque<Block> arr = new ArrayDeque<>(); // array that can be added on both ends
+        Deque<Block> arr = new ArrayDeque<>(); // queue that can be added on both ends
         Scanner in = new Scanner(System.in);
         String command="";
             do {
@@ -38,7 +38,7 @@ public class CA3_Question6
                 double price = in.nextDouble();
                 int totalQuantity = 0;
 
-                // If there's no shares in the array, then we can't sell anything
+                // If there's no shares in the queue, then we can't sell anything
                 if (arr.isEmpty()){
                     System.out.println("Error. No shares to sell.");
                 }
@@ -66,17 +66,17 @@ public class CA3_Question6
                                 soldTotal = true; // End while loop
                             }
 
-                            // If the quantity we want to sell is more or equal to the quantity of the last block in the array
+                            // If the quantity we want to sell is more or equal to the quantity of the last block in the queue
                             else if (qty >= arr.getLast().getQuantity()){
                                 // Calculate the profit from the selling the entire quantity of the last block
                                 profit += profit + (  arr.getLast().getQuantity() * ( price - arr.getLast().getPrice() )  );
                                 qty -= arr.getLast().getQuantity(); // We've sold an entire block's quantity, take it away from the amount we want to sell
                                 totalQuantity -= arr.getLast().getQuantity(); // We've sold an entire block's quantity, take it away from our total quantity
-                                arr.remove(arr.getLast()); // Since we sold the entire last block, remove it from the array
+                                arr.remove(arr.getLast()); // Since we sold the entire last block, remove it from the queue
                                 System.out.println("Sold an entire block. Current profit is: "+profit);
                             }
 
-                            // If the amount we want to sell is less than the quantity of the last block in the array
+                            // If the amount we want to sell is less than the quantity of the last block in the queue
                             else if (qty < arr.getLast().getQuantity()){
                                 profit += ( (qty * price) - (qty * arr.getLast().getPrice())); // Since we know we can sell the entire selling quantity from 1 block, we use the selling qty in the calculation
                                 arr.getLast().setQuantity( arr.getLast().getQuantity() - qty ); // Take that selling amount from the last block's quantity
@@ -89,7 +89,7 @@ public class CA3_Question6
 
 
                     }
-                    // If we don't have enough quantity across all blocks to sell the amount we want, we can't sell. e.g. sell 150 but we have only one block with 70 or two blocks with 50
+                    // If we don't have enough quantity across all blocks to sell the amount we want, we can't sell. e.g. sell 150, but we have only one block with 70 or two blocks with 50
                     else {
                         System.out.println("Error. Not enough shares to sell. Buy some before selling.");
                     }
