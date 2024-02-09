@@ -26,22 +26,22 @@ public class CA3_Question7
             {
                 // User inputs
                 System.out.print("Enter Company Name: ");
-                String company = in.nextLine();
-                System.out.print("Enter quantity: ");
+                String company = in.next();
+                System.out.print("\nEnter quantity: ");
                 int qty = in.nextInt();
                 System.out.print("\nEnter Price: ");
                 double price = in.nextDouble();
                 // Creates a new block with the inputted values
                 Block share = new Block(qty, price);
                 arr.addFirst(share); // Adds block to queue
-                stocks.put(company, arr);
+                stocks.put(company, arr); // Adds company name & queue to stocks map
             }
             else if(command.equals("sell"))
             {
                 // User inputs
                 System.out.print("Enter Company Name: ");
-                String company = in.nextLine();
-                System.out.print("Enter quantity: ");
+                String company = in.next();
+                System.out.print("\nEnter quantity: ");
                 int qty = in.nextInt();
                 double price = 20;
                 int totalQuantity = 0;
@@ -82,19 +82,19 @@ public class CA3_Question7
                                 }
 
                                 // If the quantity we want to sell is more or equal to the quantity of the last block in the queue
-                                else if (qty >= arr.getLast().getQuantity()){
+                                else if (qty >= ((ArrayDeque<Block>)companyShares).getLast().getQuantity()){
                                     // Calculate the profit from the selling the entire quantity of the last block
-                                    profit += profit + (  arr.getLast().getQuantity() * ( price - arr.getLast().getPrice() )  );
-                                    qty -= arr.getLast().getQuantity(); // We've sold an entire block's quantity, take it away from the amount we want to sell
-                                    totalQuantity -= arr.getLast().getQuantity(); // We've sold an entire block's quantity, take it away from our total quantity
-                                    arr.remove(arr.getLast()); // Since we sold the entire last block, remove it from the queue
+                                    profit += profit + (  ((ArrayDeque<Block>)companyShares).getLast().getQuantity() * ( price - ((ArrayDeque<Block>)companyShares).getLast().getPrice() )  );
+                                    qty -= ((ArrayDeque<Block>)companyShares).getLast().getQuantity(); // We've sold an entire block's quantity, take it away from the amount we want to sell
+                                    totalQuantity -= ((ArrayDeque<Block>)companyShares).getLast().getQuantity(); // We've sold an entire block's quantity, take it away from our total quantity
+                                    ((ArrayDeque<Block>)companyShares).removeLast(); // Since we sold the entire last block, remove it from the queue
                                     System.out.println("Sold an entire block. Current profit is: "+profit);
                                 }
 
                                 // If the amount we want to sell is less than the quantity of the last block in the queue
-                                else if (qty < arr.getLast().getQuantity()){
-                                    profit += ( (qty * price) - (qty * arr.getLast().getPrice())); // Since we know we can sell the entire selling quantity from 1 block, we use the selling qty in the calculation
-                                    arr.getLast().setQuantity( arr.getLast().getQuantity() - qty ); // Take that selling amount from the last block's quantity
+                                else if (qty < ((ArrayDeque<Block>)companyShares).getLast().getQuantity()){
+                                    profit += ( (qty * price) - (qty * ((ArrayDeque<Block>)companyShares).getLast().getPrice())); // Since we know we can sell the entire selling quantity from 1 block, we use the selling qty in the calculation
+                                    ((ArrayDeque<Block>)companyShares).getLast().setQuantity( ((ArrayDeque<Block>)companyShares).getLast().getQuantity() - qty ); // Take that selling amount from the last block's quantity
                                     totalQuantity -= qty; // Take that selling amount from our total quantity
                                     qty = 0; // Take that selling amount from itself
                                     System.out.println("Sold part of block. Current profit is: "+profit); // Prints out profit
