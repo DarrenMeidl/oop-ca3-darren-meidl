@@ -16,7 +16,7 @@ public class CA3_Question10
 
     public static void readFile(String fileName) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(fileName)); // Scan new file into scanner
-        Map<String, TreeSet<DistanceTo>> citiesMap = new TreeMap<>(); // Tree map where all direct connections between cities are stored
+        Map<String, HashSet<DistanceTo>> citiesMap = new TreeMap<>(); // Tree map where all direct connections between cities are stored
 
         // Read the file and build the citiesMap
         while (scanner.hasNextLine()) {
@@ -25,8 +25,8 @@ public class CA3_Question10
             String city2 = line[1]; // Second part
             int distance = Integer.parseInt(line[2]); // Converts third part to integer
 
-            citiesMap.putIfAbsent(city1, new TreeSet<>()); // If city1 (as a key) isn't in map already, add it
-            citiesMap.putIfAbsent(city2, new TreeSet<>()); // If city2 (as a key) isn't in map already, add it
+            citiesMap.putIfAbsent(city1, new HashSet<>()); // If city1 (as a key) isn't in map already, add it
+            citiesMap.putIfAbsent(city2, new HashSet<>()); // If city2 (as a key) isn't in map already, add it
 
             citiesMap.get(city1).add(new DistanceTo(city2, distance)); // Gets city1's treeset & adds 'DistanceTo' object to it (stores the distance between city1 & 2)
             citiesMap.get(city2).add(new DistanceTo(city1, distance)); // Gets city2's treeset & adds 'DistanceTo' object to it (stores the distance between city2 & 1)
@@ -64,9 +64,5 @@ public class CA3_Question10
             int integer = entry.getValue(); // the current entry's value
             System.out.println("Key: " + str + ", Value: " + integer);
         }
-
-
-
-
     }
 }
