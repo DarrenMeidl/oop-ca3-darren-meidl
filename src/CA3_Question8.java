@@ -10,165 +10,52 @@ public class CA3_Question8 {
         while (isRunning){
             Scanner in = new Scanner(System.in);
             System.out.println("Enter an arithmetic expression below:       (Q to Quit)");
-            String equation = in.nextLine();
+            String equation = in.nextLine().replaceAll("\\s", ""); // Removes all spaces
 
-            if (equation.equalsIgnoreCase("q") || equation.equalsIgnoreCase("quit")){
-                isRunning = false;
-            }
-
-            // Variables
-            int num = 0;
-            boolean isNum = false;
             Stack<Integer> numbers = new Stack<>(); // Numbers stack for storing numbers from equation
             Stack<Character> operators = new Stack<>(); // Operators stack for storing operations from equation
+            // If user wants to quit
+            if (equation.equalsIgnoreCase("q") || equation.equalsIgnoreCase("quit")){
+                return; // End program
+            }
 
             // Runs through all characters in the equation string
-            for (char c : equation.toCharArray()){
+            for (int i = 0; i < equation.length(); i++){
+                char c = equation.charAt(i); // Gets current character
+
                 if (Character.isDigit(c)){ // If the character reads as a number
-                    num = num * 10 + Character.getNumericValue(c); // Build up the number then convert char to an integer using a built-in method
-                    isNum = true;
+                    int num = c - '0'; // Subtracts the ASCII value of '0' (which is 48) from c
+                    while (i + 1 < equation.length() && Character.isDigit(equation.charAt(i + 1))) { // Runs through the next character to see if its a digit
+                        num = num * 10 + (equation.charAt(i + 1) - '0'); // Add it to the number
+                        i++; // Increment count
+                    }
+                    numbers.push(num); // Push the final number to numbers stack
                 }
-                else{
-                    if (isNum){
-                        numbers.push(num); // Push the number to the numbers stack
-                        num = 0;
-                        isNum = false;
-                    }
 
-
-                    else if (c == '('){ // If we read a (
-                        operators.push(c); // Push the operator to the operators stack
-                    }
-
-
-                    else if (c == '+' || c == '-' || c == '*' || c == '/'){ // Else if we read an operator
-                        // While the top of the stack has a higher precedence than c & operators stack isn't empty
-                        while(!operators.isEmpty() && hasHigherPrecedence(operators.peek(), c)){
-                            // Error checks
-                            if (numbers.size() < 2) { // If the numbers stack has less than 2 elements
-                                System.out.println("Error: Not enough numbers in the stack.");
-                                return;
-                            }
-
-                            // Evaluate the top
-                            // Pop two numbers off the number stack
-                            int num2 = numbers.pop();
-                            int num1 = numbers.pop();
-                            // Pop an operator off the operator stack
-                            char operator = operators.pop();
-
-                            // Combine the numbers with that operator & push the result onto the numbers stack
-                            switch (operator) { // Switch to check and perform each type of operation
-                                case '+':
-                                    numbers.push(num1 + num2); // If it's a plus, add them, push to numbers stack
-                                    break;
-                                case '-':
-                                    numbers.push(num1 - num2); // If it's a minus, subtract them, push to numbers stack
-                                    break;
-                                case '*':
-                                    numbers.push(num1 * num2); // If it's a star, multiply them, push to numbers stack
-                                    break;
-                                case '/':
-                                    if (num2 != 0) {
-                                        numbers.push(num1 / num2); // If it's a slash, divide them, push to numbers stack
-                                    } else {
-                                        System.out.println("Error! Dividing by zero is not allowed."); // If bottom number is a 0 then, print an error
-                                        return;
-                                    }
-                                    break;
-                            }
-
-                        }
-                        operators.push(c); // Push c onto the stack
-                    }
-
-
-                    else if (c == ')'){
-                        while(!operators.isEmpty() && operators.peek() != '('){
-                            // Error checks
-                            if (numbers.size() < 2) { // If the numbers stack has less than 2 elements
-                                System.out.println("Error: Not enough numbers in the stack.");
-                                return;
-                            }
-
-                            // Evaluate the top
-                            // Pop two numbers off the number stack
-                            int num2 = numbers.pop();
-                            int num1 = numbers.pop();
-                            // Pop an operator off the operator stack
-                            char operator = operators.pop();
-
-                            // Combine the numbers with that operator & push the result onto the numbers stack
-                            switch (operator) { // Switch to check and perform each type of operation
-                                case '+':
-                                    numbers.push(num1 + num2); // If it's a plus, add them, push to numbers stack
-                                    break;
-                                case '-':
-                                    numbers.push(num1 - num2); // If it's a minus, subtract them, push to numbers stack
-                                    break;
-                                case '*':
-                                    numbers.push(num1 * num2); // If it's a star, multiply them, push to numbers stack
-                                    break;
-                                case '/':
-                                    if (num2 != 0) {
-                                        numbers.push(num1 / num2); // If it's a slash, divide them, push to numbers stack
-                                    } else {
-                                        System.out.println("Error! Dividing by zero is not allowed."); // If bottom number is a 0 then, print an error
-                                        return;
-                                    }
-                                    break;
-                            }
-
-                        }
-                        if (!operators.isEmpty()){
-                            operators.pop(); // Pop the (
-                        }
-                    }
+                else if (c == '('){ // If we read a (
+                    operators.push(c); // Push the operator to the operators stack
                 }
-            }
-            // Check if isNum is true in case input string ends in number, ensures multi-digit numbers are included
-            if (isNum){
-                numbers.push(num); // Pushes last number to numbers stack
+
+                else if (c == ')') { // If we read a )
+                    while (operators.peek() != '(') { // While top of operators stack isn't a (
+                        numbers.push(applyOperation(operators.pop(), numbers.pop(), numbers.pop())); // Push results of operations method to numbers stack
+                    }
+                    operators.pop(); // Remove the top element from operators stack
+                }
+
+                else if (c == '+' || c == '-' || c == '*' || c == '/'){ // Else if we read an operator
+                    // While operators stack isn't empty & top of the stack has a higher precedence than c
+                    while(!operators.isEmpty() && hasHigherPrecedence(c, operators.peek())){
+                        numbers.push(applyOperation(operators.pop(), numbers.pop(), numbers.pop())); // Push results of operations method to numbers stack
+                    }
+                    operators.push(c); // Push c onto the stack
+                }
             }
             // Once there is no more input
             while(!operators.isEmpty()) { // While the operators stack isn't empty
-                // Error checks
-                if (numbers.size() < 2) { // If the numbers stack has less than 2 elements
-                    System.out.println("Error: Not enough numbers in the stack.");
-                    return;
-                }
-
-                // Evaluate the top
-                // Pop two numbers off the number stack
-                int num2 = numbers.pop();
-                int num1 = numbers.pop();
-                // Pop an operator off the operator stack
-                char operator = operators.pop();
-
-                // Combine the numbers with that operator & push the result onto the numbers stack
-                switch (operator) { // Switch to check and perform each type of operation
-                    case '+':
-                        numbers.push(num1 + num2); // If it's a plus, add them, push to numbers stack
-                        break;
-                    case '-':
-                        numbers.push(num1 - num2); // If it's a minus, subtract them, push to numbers stack
-                        break;
-                    case '*':
-                        numbers.push(num1 * num2); // If it's a star, multiply them, push to numbers stack
-                        break;
-                    case '/':
-                        if (num2 != 0) {
-                            numbers.push(num1 / num2); // If it's a slash, divide them, push to numbers stack
-                        } else {
-                            System.out.println("Error! Dividing by zero is not allowed."); // If bottom number is a 0 then, print an error
-                            return;
-                        }
-                        break;
-                }
-
+                numbers.push(applyOperation(operators.pop(), numbers.pop(), numbers.pop())); // Push results of operations method to numbers stack
             }
-
-            System.out.println("The answer is: " + numbers.peek()); // Prints final results
+            System.out.println("The answer is: " + numbers.pop()); // Prints final results, remove last number from numbers stack
         }
 
     }
@@ -184,8 +71,8 @@ public class CA3_Question8 {
         return true;
     }
 
-    public static int applyOperation(char op, int a, int b) {
-        // Combine the numbers with that operator & push the result onto the numbers stack
+    public static int applyOperation(char op, int b, int a) {
+        // Combine the numbers with that operator
         switch (op) { // Switch to check and perform each type of operation
             case '+':
                 return a + b;
