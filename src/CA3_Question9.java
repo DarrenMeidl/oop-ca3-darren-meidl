@@ -111,6 +111,7 @@ public class CA3_Question9
 
             // Check if the new position is within the maze & not visited
             if (newX >= 0 && newX < arr.length && newY >= 0 && newY < arr[0].length && arr[newX][newY] != -1) {
+                System.out.println("Moving to position: (" + newX + ", " + newY + ")"); // Print new position
                 directionsStack.push(new int[]{newX, newY});
                 continue; // Ensures the while loop continues to the next position in the stack without checking other directions
             }
@@ -124,6 +125,7 @@ public class CA3_Question9
 
                 // Check if the new position is within the maze and not visited
                 if (newX >= 0 && newX < arr.length && newY >= 0 && newY < arr[0].length && arr[newX][newY] != -1) {
+                    System.out.println("Moving to position: (" + newX + ", " + newY + ")"); // Print new position
                     directionsStack.push(new int[]{newX, newY});
                 }
             }
@@ -151,12 +153,12 @@ public class CA3_Question9
     }
     public static void start()
     {
-        int[][] arr = createMaze();
-        display(arr);
-        solve(1, 1, DIRECTION.valueOf("SOUTH"), arr);
+        int[][] arr = createMaze(); // Fills in a new maze into the int array
+        display(arr); // Calls the display method to print out the int array
+        solve(1, 1, DIRECTION.valueOf("SOUTH"), arr); // Calls the solve method to find the exit in the int array
     }
 
     public static void main(String[] args) {
         start();
-    }
+    } // Calls the start method
 }

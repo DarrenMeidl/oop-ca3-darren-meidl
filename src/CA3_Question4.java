@@ -34,22 +34,14 @@ public class CA3_Question4 {
                 }
             }
         }
-        // if any of the tags aren't closed then the html code is incomplete and needs to be fixed, so function ends
+        // Returns true if all tags are properly nested and closed, otherwise this will return false
         return tagStack.isEmpty();
     }
 
-    /*
-        This function tests the files in the files array to see if
-         they are valid.
-         tags_valid.txt should return true;
-         tags_invalid.txt should output as invalid;
-
-
-     */
     public static void main(String[] args) throws FileNotFoundException {
-        String[] files = {"tags_valid.txt", "tags_invalid.txt"};
-        for(String fName: files) {
-            System.out.print(fName +": ");
+        String[] files = {"tags_valid.txt", "tags_invalid.txt"}; // Array of string containing the names of text files
+        for(String fName: files) { // Runs through all strings in the array
+            System.out.print(fName +": "); // Print the name
             if (validate(fName)) {
                 System.out.println("This file is valid");
             } else {
