@@ -13,12 +13,12 @@ public class CA3_Question4 {
      */
     public static boolean validate(String filename) throws FileNotFoundException
     {
-        Stack<String> tagStack = new Stack<>(); // stack
-        Scanner scanner = new Scanner(new File(filename)); // scanning file
+        Stack<String> tagStack = new Stack<>(); // stack storing strings for tags
+        Scanner scanner = new Scanner(new File(filename)); // Scanner for scanning a new file
 
         while(scanner.hasNextLine()){ // run through each line
-            String line = scanner.nextLine(); // gets next line
-            String[] tags = line.split(" "); // splits line into tags
+            String line = scanner.nextLine(); // gets next line & stores into a string
+            String[] tags = line.split(" "); // Stores an entire line until it reaches a space into a String array called 'tags'
 
             for (String tag : tags){ // Runs through every individual tag
                 if(tag.startsWith("</")){ // If it's a closing tag
